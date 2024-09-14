@@ -21,35 +21,28 @@ struct ToggleImmersiveSpaceButton: View {
                     case .open:
                         appModel.immersiveSpaceState = .inTransition
                         await dismissImmersiveSpace()
-                        // Don't set immersiveSpaceState to .closed because there
-                        // are multiple paths to ImmersiveView.onDisappear().
-                        // Only set .closed in ImmersiveView.onDisappear().
-
+                        // see ImmersiveView.onDisappear()
                     case .closed:
                         appModel.immersiveSpaceState = .inTransition
                         switch await openImmersiveSpace(id: appModel.immersiveSpaceID) {
                             case .opened:
-                                // Don't set immersiveSpaceState to .open because there
-                                // may be multiple paths to ImmersiveView.onAppear().
-                                // Only set .open in ImmersiveView.onAppear().
+                                // see ImmersiveView.onAppear()
                                 break
 
                             case .userCancelled, .error:
-                                // On error, we need to mark the immersive space
-                                // as closed because it failed to open.
                                 fallthrough
                             @unknown default:
-                                // On unknown response, assume space did not open.
+                                // assume space did not open.
                                 appModel.immersiveSpaceState = .closed
                         }
 
                     case .inTransition:
-                        // This case should not ever happen because button is disabled for this case.
+                        // unreachable (button should be disabled)
                         break
                 }
             }
         } label: {
-            Text(appModel.immersiveSpaceState == .open ? "Hide Immersive Space" : "Show Immersive Space")
+            Text(appModel.immersiveSpaceState == .open ? "End Immersive Space" : "Enter Immersive Space")
         }
         .disabled(appModel.immersiveSpaceState == .inTransition)
         .animation(.none, value: 0)

@@ -6,13 +6,8 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		0538B0072C9640A200FCFE5E /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 0538B0062C9640A200FCFE5E /* RealityKitContent */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		0538B0012C9640A200FCFE5E /* visionp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = visionp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0538B0052C9640A200FCFE5E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -41,7 +36,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0538B0072C9640A200FCFE5E /* RealityKitContent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +62,6 @@
 		0538B0042C9640A200FCFE5E /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				0538B0052C9640A200FCFE5E /* RealityKitContent */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
@@ -93,7 +86,6 @@
 			);
 			name = visionp;
 			packageProductDependencies = (
-				0538B0062C9640A200FCFE5E /* RealityKitContent */,
 			);
 			productName = visionp;
 			productReference = 0538B0012C9640A200FCFE5E /* visionp.app */;
@@ -347,13 +339,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		0538B0062C9640A200FCFE5E /* RealityKitContent */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RealityKitContent;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0538AFF92C9640A200FCFE5E /* Project object */;
 }
