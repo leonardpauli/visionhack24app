@@ -19,6 +19,8 @@ struct ImmersiveView: View {
 
   @State private var sceneObjects = SceneObjects()
 
+  @Environment(\.openWindow) private var openWindow
+
   var body: some View {
     RealityView { content in
       // Existing spheres
@@ -49,6 +51,12 @@ struct ImmersiveView: View {
         sphere.model?.materials = [SimpleMaterial(color: color, roughness: 0.5, isMetallic: true)]
       }
     }
+    .gesture(
+      SpatialTapGesture().targetedToAnyEntity().onEnded { value in
+        let name = value.entity.name
+        self.openWindow(id: AppModel.immersiveSphereDetailID, value: name)
+      }
+    )
     .task {
       await gestureModel.start()
     }
@@ -65,6 +73,18 @@ struct ImmersiveView: View {
       mesh: .generateSphere(radius: 0.05),
       materials: [SimpleMaterial(color: .black, roughness: 0.5, isMetallic: true)])
     parent.add(sphere)
+
+    sphere.generateCollisionShapes(recursive: true)
+
+    var physicsBody = PhysicsBodyComponent(
+      shapes: [.generateSphere(radius: 0.05)],
+      density: 1000.0,
+      material: PhysicsMaterialResource.generate(friction: 0.5, restitution: 0.5),
+      mode: .dynamic
+    )
+    physicsBody.isAffectedByGravity = false
+    sphere.physicsBody = physicsBody
+
     return sphere
   }
 
@@ -72,8 +92,19 @@ struct ImmersiveView: View {
     let sphere = ModelEntity(
       mesh: .generateSphere(radius: 1.00),
       materials: [SimpleMaterial(color: UIColor(.blue), roughness: 0.5, isMetallic: true)])
+      .addTappable()
     sphere.name = "ColoredSphere"
     parent.add(sphere)
+
+    var physicsBody = PhysicsBodyComponent(
+      shapes: [.generateSphere(radius: 0.05)],
+      density: 1000.0,
+      material: PhysicsMaterialResource.generate(friction: 0.5, restitution: 0.5),
+      mode: .kinematic
+    )
+    physicsBody.isAffectedByGravity = false
+    sphere.physicsBody = physicsBody
+
     return sphere
   }
 }

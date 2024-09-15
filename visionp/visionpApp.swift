@@ -19,7 +19,11 @@ struct visionpApp: App {
     }
     .windowResizability(.contentSize)
 
-    ImmersiveSpace(id: appModel.immersiveSpaceID) {
+    WindowGroup(id: AppModel.immersiveSphereDetailID, for: String.self) { value in
+      SphereDetail(title: value.wrappedValue!)
+    }
+
+    ImmersiveSpace(id: AppModel.immersiveSpaceID) {
       ImmersiveView(gestureModel: HandGestureModelContainer.handGestureModel)
         .environment(appModel)
         .onAppear {
