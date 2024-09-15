@@ -4,15 +4,19 @@
 ```files.listed
 ```
 ```files.attached
-/ # 10KB (36KB on disk)
+/ # 17KB (48KB on disk)
 /.promptignore # 90B
-/visionp/ # 4.1KB
-/visionp/AppModel.swift # 354B
-/visionp/ContentView.swift # 386B
-/visionp/ImmersiveView.swift # 798B
-/visionp/Info.plist # 664B
+/visionp/ # 11KB
+/visionp/AppModel.swift # 511B
+/visionp/ContentView.swift # 1.4KB
+/visionp/extensions/ # 76B
+/visionp/extensions/SIMD4_ext.swift # 76B
+/visionp/HandGestureModel.swift # 2.2KB
+/visionp/HandTrackerModel.swift # 1.9KB
+/visionp/ImmersiveView.swift # 1.9KB
+/visionp/Info.plist # 789B
 /visionp/ToggleImmersiveSpaceButton.swift # 1.4KB
-/visionp/visionpApp.swift # 618B
+/visionp/visionpApp.swift # 831B
 ```
 
 in ImmersiveView, I want an additional sphere{radius: r, pos: (x,y,z), color: .blue}, and add a panel with sliders(-1..1) for x,y,z, and slider(0.01,0.02..2.0) for r, in AppModel.
@@ -47,3 +51,4 @@ Add blue sphere with controllable position and size in ImmersiveView
 > `{"id":"m1biw9k6j5","hash":"5094","cost_est":0.0276324,"cost":0.030834,"duration":18692,"status":"processed"}`
 
 @_apply 3 actions applied
+

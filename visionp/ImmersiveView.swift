@@ -11,6 +11,7 @@ import SwiftUI
 
 struct ImmersiveView: View {
   @Environment(AppModel.self) private var appModel
+  @ObservedObject var gestureModel: HandGestureModel
 
   var body: some View {
     RealityView { content in
@@ -18,19 +19,26 @@ struct ImmersiveView: View {
       add_sphere(to: content).position.x = 1.0
       add_sphere(to: content).position.y = 1.0
       add_sphere(to: content).position.z = 1.0
-      add_sphere(to: content).position.x = 0.0
-
-      // New blue sphere
-      let blueSphere = add_blue_sphere(to: content)
-
-      // Update blue sphere position and size
-      content.add(blueSphere)
+      _ = add_sphere(to: content)
+      _ = add_blue_sphere(to: content)
     } update: { content in
+      guard let pointer = gestureModel.computeIndexFingerTipPositionGlobal(for: gestureModel.latestHandTracking.right) else {return}
+      
       if let blueSphere = content.entities.first(where: { $0.name == "BlueSphere" }) as? ModelEntity
       {
         blueSphere.position = [appModel.sphereX, appModel.sphereY, appModel.sphereZ]
         blueSphere.scale = .one * appModel.sphereRadius
+        blueSphere.position = pointer
       }
+    }
+    .task {
+      await gestureModel.start()
+    }
+    .task {
+      await gestureModel.publishHandTrackingUpdates()
+    }
+    .task {
+      await gestureModel.monitorSessionEvents()
     }
   }
 
@@ -47,11 +55,12 @@ struct ImmersiveView: View {
       mesh: .generateSphere(radius: 1.00),
       materials: [SimpleMaterial(color: .blue, roughness: 0.5, isMetallic: true)])
     sphere.name = "BlueSphere"
+    parent.add(sphere)
     return sphere
   }
 }
 
 #Preview(immersionStyle: .mixed) {
-  ImmersiveView()
+  ImmersiveView(gestureModel: HandGestureModelContainer.handGestureModel)
     .environment(AppModel())
 }

@@ -20,7 +20,7 @@ struct visionpApp: App {
     .windowResizability(.contentSize)
 
     ImmersiveSpace(id: appModel.immersiveSpaceID) {
-      ImmersiveView()
+      ImmersiveView(gestureModel: HandGestureModelContainer.handGestureModel)
         .environment(appModel)
         .onAppear {
           appModel.immersiveSpaceState = .open
@@ -31,4 +31,10 @@ struct visionpApp: App {
     }
     .immersionStyle(selection: .constant(.mixed), in: .mixed)
   }
+}
+
+// why?
+@MainActor
+enum HandGestureModelContainer {
+  private(set) static var handGestureModel = HandGestureModel()
 }

@@ -19,5 +19,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSHandsTrackingUsageDescription</key>
+	<string>Tracks your hands to provide custom hand gesture interactions.</string>
 </dict>
 </plist>
