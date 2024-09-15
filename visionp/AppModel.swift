@@ -1,13 +1,5 @@
-//
-//  AppModel.swift
-//  visionp
-//
-//  Created by Leonard Pauli on 2024-09-14.
-//
-
 import SwiftUI
 
-/// Maintains app-wide state
 @MainActor
 @Observable
 class AppModel {
@@ -21,8 +13,21 @@ class AppModel {
   }
   var immersiveSpaceState = ImmersiveSpaceState.closed
 
-  var sphereX: Float = 0.0
-  var sphereY: Float = 0.0
-  var sphereZ: Float = 0.0
-  var sphereRadius: Float = 0.05
+  var mainSphere = Sphere(position: [0, 0, 0], radius: 0.05, color: .cyan, isPointer: true)
+  var additionalSpheres: [Sphere] = []
+
+  func addSphere(at position: SIMD3<Float>) {
+    let newSphere = Sphere(position: position)
+    additionalSpheres.append(newSphere)
+  }
+
+  func updateSphere(_ sphere: Sphere) {
+    if let index = additionalSpheres.firstIndex(where: { $0.id == sphere.id }) {
+      additionalSpheres[index] = sphere
+    }
+  }
+
+  func deleteSphere(_ sphere: Sphere) {
+    additionalSpheres.removeAll { $0.id == sphere.id }
+  }
 }
