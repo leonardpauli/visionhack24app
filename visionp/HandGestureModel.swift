@@ -26,15 +26,17 @@ class HandGestureModel: ObservableObject, @unchecked Sendable {
   func publishHandTrackingUpdates() async {
     for await update in handTracking.anchorUpdates {
       let anchor = update.anchor
-      guard case AnchorUpdate<HandAnchor>.Event.updated = update.event, anchor.isTracked else { continue }
-    
+      guard case AnchorUpdate<HandAnchor>.Event.updated = update.event, anchor.isTracked else {
+        continue
+      }
+
       if anchor.chirality == .left {
         latestHandTracking.left = anchor
       } else if anchor.chirality == .right {
         latestHandTracking.right = anchor
       }
 
-      printIndexFingerTipPosition(for: anchor)
+      // printIndexFingerTipPosition(for: anchor)
     }
   }
 
@@ -52,7 +54,8 @@ class HandGestureModel: ObservableObject, @unchecked Sendable {
   }
 
   func computeIndexFingerTipPositionGlobal(for anchor: HandAnchor?) -> SIMD3<Float>? {
-    guard let anchor = anchor, let indexFingerTip = anchor.handSkeleton?.joint(.indexFingerTip), indexFingerTip.isTracked
+    guard let anchor = anchor, let indexFingerTip = anchor.handSkeleton?.joint(.indexFingerTip),
+      indexFingerTip.isTracked
     else { return nil }
 
     let indexFingerTipTransform = matrix_multiply(
@@ -60,13 +63,13 @@ class HandGestureModel: ObservableObject, @unchecked Sendable {
       indexFingerTip.anchorFromJointTransform
     )
     let globalPosition = indexFingerTipTransform.columns.3.xyz
-    
+
     return globalPosition
-    
+
   }
-  
+
   private func printIndexFingerTipPosition(for anchor: HandAnchor) {
-    guard let globalPosition = computeIndexFingerTipPositionGlobal(for: anchor) else {return}
+    guard let globalPosition = computeIndexFingerTipPositionGlobal(for: anchor) else { return }
     print("handtracker.\(anchor.chirality).index_finger_tip.position.global: \(globalPosition)")
   }
 }

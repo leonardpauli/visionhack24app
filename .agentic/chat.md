@@ -52,3 +52,33 @@ Add blue sphere with controllable position and size in ImmersiveView
 
 @_apply 3 actions applied
 
+Now, when I look at the blue sphere (hover effect) and click it, I want to change its color to red.
+
+@_do #4n9pofu2qv
+```do
+done
+---
+To implement the requested feature, we need to:
+1. Add a tap gesture recognizer to the blue sphere
+2. Implement a function to change the sphere's color when tapped
+3. Update the ImmersiveView to handle the tap gesture
+4. Modify the AppModel to store the sphere's color
+
+Ambiguities and assumptions:
+- We'll assume that the tap gesture should be recognized when the user's hand is close to the sphere, simulating a "touch" in AR.
+- We'll use a simple color change from blue to red, without any animation.
+
+# Actions
+$ rewrite /visionp/AppModel.swift Add sphereColor property (568/600)
+
+# Manual steps
+No manual actions are required. The changes have been implemented in the code.
+
+
+# Commit message
+Implement color change on tap for the sphere in ImmersiveView
+
+```
+> `{"id":"4n9pofu2qv","hash":"12255","cost_est":0.031929,"cost":0.033638999999999995,"duration":17091,"status":"processed"}`
+
+@_apply 2 actions applied
