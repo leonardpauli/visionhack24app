@@ -56,16 +56,20 @@ struct ImmersiveView: View {
     // else { return }
 
     sphere.scale = .one * appModel.mainSphere.radius
-    // appModel.mainSphere.position = pointer1
     sphere.position = pointer1
 
-    print("main sphere pos \(pointer1)")
+    // print("main sphere pos \(pointer1)")
 
     let distance = distance(pointer1, pointer2)
     let color = UIColor(
       hue: CGFloat(distance / 2.0), saturation: 1.0, brightness: 1.0,
       alpha: distance < appModel.mainSphere.radius ? 0.3 : 1.0)
     sphere.model?.materials = [SimpleMaterial(color: color, roughness: 0.5, isMetallic: true)]
+    
+    
+    Task { @MainActor in
+      appModel.mainSphere.position = pointer1
+    }
 
     // if let pointer = gestureModel.computeIndexFingerTipPositionGlobal(
     //   for: gestureModel.latestHandTracking.right)
@@ -85,7 +89,7 @@ struct ImmersiveView: View {
         sphere.position = sphereEntity.position
         sphereEntity.scale = .one * sphere.radius
         sphereEntity.model?.materials = [
-          SimpleMaterial(color: UIColor(sphere.color), roughness: 0.5, isMetallic: true)
+          SimpleMaterial(color: UIColor(sphere.color), roughness: 0.5, isMetallic: true),
         ]
       } else {
         let sphereEntity = add_colored_sphere(to: content, sphere: sphere)
