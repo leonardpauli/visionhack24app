@@ -18,4 +18,10 @@ class AppModel {
     case open
   }
   var immersiveSpaceState = ImmersiveSpaceState.closed
+  
+  // New properties for the blue sphere
+  var sphereX: Float = 0.0
+  var sphereY: Float = 0.0
+  var sphereZ: Float = 0.0
+  var sphereRadius: Float = 0.05
 }
